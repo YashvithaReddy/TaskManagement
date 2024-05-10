@@ -6,32 +6,32 @@ const searchInput = document.querySelector(".search-todo");
 
 document.addEventListener("DOMContentLoaded", getLocalTodos);
 todoButton.addEventListener("click", addTodo);
-todoList.addEventListener("click", handleTodoClick); // Changed event listener to handle todo click
+todoList.addEventListener("click", handleTodoClick);
 filterOption.addEventListener("change", filterTodo);
 searchInput.addEventListener("input", searchTodo);
 
-// Add event listener for focus on search input
+
 searchInput.addEventListener("focus", function() {
-    todoButton.removeEventListener("click", addTodo); // Remove the event listener for form submission
+    todoButton.removeEventListener("click", addTodo); 
 });
 
-// Add event listener for blur on search input
+
 searchInput.addEventListener("blur", function() {
-    todoButton.addEventListener("click", addTodo); // Add back the event listener for form submission
+    todoButton.addEventListener("click", addTodo); 
 });
 
 function addTodo(event) {
     event.preventDefault();
     const todoDiv = document.createElement("div");
-    const uniqueId = generateRandomTwoDigitId(); // Generate a random two-digit ID
-    todoDiv.dataset.id = uniqueId; // Set the ID as a data attribute
+    const uniqueId = generateRandomTwoDigitId(); 
+    todoDiv.dataset.id = uniqueId;
     todoDiv.classList.add("todo");
     const newTodo = document.createElement("li");
-    newTodo.innerText = `${uniqueId} ${todoInput.value}`; // Display the two-digit ID along with todo
+    newTodo.innerText = `${uniqueId} ${todoInput.value}`; 
     newTodo.classList.add("todo-item");
     todoDiv.appendChild(newTodo);
-    //ADDING TO LOCAL STORAGE 
-    saveLocalTodos(todoInput.value, uniqueId); // Save todo with ID
+    
+    saveLocalTodos(todoInput.value, uniqueId); 
     
     const completedButton = document.createElement("button");
     completedButton.innerHTML = '<i class="fas fa-check-circle"></i>';
@@ -51,10 +51,10 @@ function handleTodoClick(event) {
     const clickedElement = event.target;
     if (clickedElement.classList.contains("todo-item")) {
         const todoId = clickedElement.parentElement.dataset.id;
-        const todoText = clickedElement.innerText.split(" ").slice(1).join(" "); // Extracting text without the ID
+        const todoText = clickedElement.innerText.split(" ").slice(1).join(" "); 
         const newTodoText = prompt("Enter the new content:", todoText);
         if (newTodoText !== null) {
-            updateTodoText(todoId, newTodoText); // Update the content with the same ID
+            updateTodoText(todoId, newTodoText); 
         }
     }
     if (clickedElement.classList.contains("trash-btn")) {
@@ -122,7 +122,7 @@ function getLocalTodos() {
         todoDiv.dataset.id = id;
         todoDiv.classList.add("todo");
         const newTodo = document.createElement("li");
-        newTodo.innerText = `${id} ${todo}`; // Display ID along with todo
+        newTodo.innerText = `${id} ${todo}`; 
         newTodo.classList.add("todo-item");
         todoDiv.appendChild(newTodo);
 
@@ -156,7 +156,7 @@ function removeLocalTodos(todo) {
 
 function updateTodoText(id, newText) {
     const todo = document.querySelector(`[data-id="${id}"] .todo-item`);
-    todo.innerText = `${id} ${newText}`; // Update the content with the same ID
+    todo.innerText = `${id} ${newText}`; 
     updateLocalTodoText(id, newText);
 }
 
@@ -178,10 +178,10 @@ function searchTodo() {
     const todos = todoList.childNodes;
     todos.forEach(function(todo) {
         const todoId = todo.dataset.id;
-        const todoText = todo.innerText.split(" ").slice(1).join(" "); // Extracting text without the ID
+        const todoText = todo.innerText.split(" ").slice(1).join(" "); 
         if (todoId.includes(searchValue)) {
             todo.style.display = "flex";
-            todo.innerText = `${todoId} ${todoText}`; // Reattach the ID to the displayed text
+            todo.innerText = `${todoId} ${todoText}`; 
         } else {
             todo.style.display = "none";
         }
@@ -189,5 +189,5 @@ function searchTodo() {
 }
 
 function generateRandomTwoDigitId() {
-    return Math.floor(Math.random() * 90) + 10; // Generate a random number between 10 and 99
+    return Math.floor(Math.random() * 90) + 10;
 }
